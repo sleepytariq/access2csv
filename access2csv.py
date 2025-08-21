@@ -45,7 +45,7 @@ def main() -> None:
             args.output, "w", encoding="utf-8", newline=""
         ) as output:
             # fmt: off
-            pattern = re.compile(r"^(?P<Host>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s(?P<Clientid>[^\s]+)\s(?P<Userid>[^\s]+)\s\[(?P<Timestamp>[^\]]+)\]\s\"(?P<Method>[A-Z]+)\s(?P<Resource>[^\s]+)\s(?P<Protocol>[^\"]+)\"\s(?P<Status>\d{3})\s(?P<Size>[^\s]+)\s\"(?P<Referer>.*)\"\s\"(?P<Useragent>.*)\"$")
+            pattern = re.compile(r"^(?P<Host>((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|([0-9a-fA-F]{0,4}:?){2,8}))\s(?P<Clientid>[^\s]+)\s(?P<Userid>[^\s]+)\s\[(?P<Timestamp>[^\]]+)\]\s\"(?P<Method>[A-Z]+)\s(?P<Resource>[^\s]+)\s(?P<Protocol>[^\"]+)\"\s(?P<Status>\d{3})\s(?P<Size>[^\s]+)\s\"(?P<Referer>.*)\"\s\"(?P<Useragent>.*)\"$")
             # fmt: on
             writer = csv.DictWriter(
                 output,
