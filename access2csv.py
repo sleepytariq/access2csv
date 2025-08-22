@@ -2,6 +2,7 @@
 
 import argparse
 import csv
+import fileinput
 import re
 import sys
 from datetime import datetime
@@ -19,8 +20,9 @@ def parse_arguments() -> argparse.Namespace:
         "-i",
         "--input",
         type=str,
+        nargs="+",
         metavar="<PATH>",
-        help="path to access.log file",
+        help="path to access.log file(s)",
         required=True,
     )
     required.add_argument(
@@ -42,7 +44,7 @@ def main() -> None:
 
     try:
         with (
-            open(args.input, "r") as input,
+            fileinput.input(files=args.input) as input,
             open(args.output, "w", encoding="utf-8", newline="") as output,
         ):
             # fmt: off
@@ -67,12 +69,12 @@ def main() -> None:
             )
             writer.writeheader()
 
-            for lineno, line in enumerate(input):
+            for line in input:
                 try:
                     match = pattern.match(line).groupdict()
                 except AttributeError:
                     print(
-                        f"Error: malformed structure at line {lineno + 1}",
+                        f"Error: malformed structure in {input.filename()} at line {input.filelineno()}",
                         file=sys.stderr,
                     )
                     continue
