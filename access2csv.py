@@ -13,7 +13,7 @@ def parse_arguments() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Convert Apache's (Combined Log Format) access.log to csv",
         add_help=False,
-        formatter_class=lambda prog: argparse.HelpFormatter(prog, max_help_position=48),
+        formatter_class=lambda prog: argparse.HelpFormatter(prog, max_help_position=56),
     )
     required = parser.add_argument_group("required")
     optional = parser.add_argument_group("optional")
