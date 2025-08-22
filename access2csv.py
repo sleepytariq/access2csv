@@ -85,7 +85,7 @@ def main() -> None:
                 try:
                     match = pattern.match(line).groupdict()
                 except AttributeError:
-                    print(line, file=temperrfile, end="")
+                    print(line.rstrip("\n"), file=temperrfile)
                     errors += 1
                     continue
 
