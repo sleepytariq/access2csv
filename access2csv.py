@@ -46,7 +46,7 @@ def main() -> None:
             open(args.output, "w", encoding="utf-8", newline="") as output,
         ):
             # fmt: off
-            pattern = re.compile(r"^(?P<Host>((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|([0-9a-fA-F]{0,4}:?){2,8}))\s(?P<Clientid>[^\s]+)\s(?P<Userid>[^\s]+)\s\[(?P<Timestamp>[^\]]+)\]\s\"(?P<Method>[A-Z]+)\s(?P<Resource>[^\s]+)\s(?P<Protocol>[^\"]+)\"\s(?P<Status>\d{3})\s(?P<Size>[^\s]+)\s\"(?P<Referer>.*)\"\s\"(?P<Useragent>.*)\"$")
+            pattern = re.compile(r"^(?P<Host>(?:(?:\d{1,3}\.){3}\d{1,3}|([0-9a-fA-F]{0,4}\:?){2,8}))\s(?P<Clientid>[\S]+)\s(?P<Userid>[\S]+)\s\[(?P<Timestamp>\d{2}\/[A-Za-z]{3}\/\d{4}:\d{2}\:\d{2}\:\d{2}\s[+-]\d{4})\]\s\"(?P<Method>[A-Z]{3,7})\s(?P<Resource>[\S]+)\s(?P<Protocol>HTTP\/\d(?:\.\d)?)\"\s(?P<Status>\d{3})\s(?P<Size>\-|\d+)\s\"(?P<Referer>[^\"]*)\"\s\"(?P<Useragent>[^\"]*)\"$")
             # fmt: on
             writer = csv.DictWriter(
                 output,
@@ -83,6 +83,7 @@ def main() -> None:
                 match["Timestamp"] = datetime.strptime(
                     match["Timestamp"], "%d/%b/%Y:%H:%M:%S %z"
                 ).isoformat()
+
                 writer.writerow(match)
     except (FileNotFoundError, IOError) as err:
         print(err, file=sys.stderr)
