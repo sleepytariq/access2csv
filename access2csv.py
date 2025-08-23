@@ -82,10 +82,17 @@ def main() -> None:
             errors = 0
 
             for line in input:
+                line = line.rstrip("\n")
                 try:
                     match = pattern.match(line).groupdict()
                 except AttributeError:
-                    print(line.rstrip("\n"), file=temperrfile)
+                    print(
+                        input.filename(),
+                        input.filelineno(),
+                        line,
+                        sep=":",
+                        file=temperrfile,
+                    )
                     errors += 1
                     continue
 
