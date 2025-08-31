@@ -111,7 +111,7 @@ def main() -> None:
                     while chunk := temperrfile.read(4096):
                         errfile.write(chunk)
 
-            print(f"Parsed {len(args.input)} log file(s) with {errors} parsing errors")
+            print(f"Parsed {len(args.input)} file(s) with {errors} parsing error(s)")
     except (FileNotFoundError, IOError) as err:
         print(err, file=sys.stderr)
         sys.exit(1)
